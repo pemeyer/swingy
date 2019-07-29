@@ -1,4 +1,4 @@
 package com.pemeyer.swingy.model;
 
-public class AircraftFactory {
+public class Ogre extends Hero {
 }
