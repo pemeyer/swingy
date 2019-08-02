@@ -9,4 +9,3 @@ public class Hero {
     protected int def;
     protected int hit;
 }
-1
