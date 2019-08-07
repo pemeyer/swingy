@@ -4,15 +4,15 @@ import com.pemeyer.swingy.model.ATT;
 import com.pemeyer.swingy.model.Elf;
 
 public class HeroFactory {
-    public static ATT newHero(String type){
+    public static ATT newHero(String type, String name){
         if (type.equalsIgnoreCase("ELF")){
-            return new Elf();
+            return new Elf(name, "Elf", 1, 0, 49, 34, 100);
         }
         else if (type.equalsIgnoreCase("Knight")){
-            return new Knight();
+            return new Knight(name, "Knight", 1, 0, 53, 53, 100);
         }
         else if (type.equalsIgnoreCase("Ogre")){
-            return new Ogre();
+            return new Ogre(name, "Ogre", 1, 0, 45, 39, 100);
         }
         return null;
     }
