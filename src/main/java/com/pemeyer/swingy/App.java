@@ -82,7 +82,7 @@ public class App
         
         mainTextArea = new JTextArea("CREATE YOUR HERO HERE:");
         mainTextArea.setBounds(100, 60, 600, 250);
-        mainTextArea.setBackground(Color.black);
+        mainTextArea.setBackground(Color.blue);
         mainTextArea.setForeground(Color.white);
         mainTextArea.setFont(normalFont);
         mainTextArea.setLineWrap(true);
@@ -108,10 +108,11 @@ public class App
         chooseSavedHero.setFocusPainted(false);
 
         textField = new JTextField(20);
-        textField.setBounds(100, 200, 100, 150);
-        textField.setBackground(Color.black);
+        textField.setBounds(100, 100, 100, 100);
+        textField.setBackground(Color.white);
         textField.setForeground(Color.white);
         textField.setFont(normalFont);
+        mainTextPanel.add(textField);
 
         choiceButtonPanel.add(createHero);
         choiceButtonPanel.add(chooseSavedHero);
@@ -121,8 +122,6 @@ public class App
 
         con.add(mainTextPanel);
         con.add(choiceButtonPanel);
-        con.add(textField);
-
     }
 
     public void createHero(String name){
