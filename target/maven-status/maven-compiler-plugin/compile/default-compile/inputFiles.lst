@@ -1,7 +1,10 @@
 /goinfre/pemeyer/Desktop/swingy/src/main/java/com/pemeyer/swingy/model/HeroFactory.java
 /goinfre/pemeyer/Desktop/swingy/src/main/java/com/pemeyer/swingy/model/Knight.java
 /goinfre/pemeyer/Desktop/swingy/src/main/java/com/pemeyer/swingy/model/Hero.java
+/goinfre/pemeyer/Desktop/swingy/src/main/java/com/pemeyer/swingy/view/Console.java
 /goinfre/pemeyer/Desktop/swingy/src/main/java/com/pemeyer/swingy/model/Ogre.java
+/goinfre/pemeyer/Desktop/swingy/src/main/java/com/pemeyer/swingy/controller/Create.java
 /goinfre/pemeyer/Desktop/swingy/src/main/java/com/pemeyer/swingy/model/Elf.java
 /goinfre/pemeyer/Desktop/swingy/src/main/java/com/pemeyer/swingy/model/ATT.java
+/goinfre/pemeyer/Desktop/swingy/src/main/java/com/pemeyer/swingy/view/GUI.java
 /goinfre/pemeyer/Desktop/swingy/src/main/java/com/pemeyer/swingy/App.java
