@@ -145,7 +145,9 @@ public class GUI
             if (command.equals( "CREATE GAME" )){
                 createCreateScreen();
             } else if (command.equals("CREATE NEW HERO")){
-                createhero.createHero(type = list.getSelectedValue().toString(), textField.getText());
+                type = list.getSelectedValue().toString();
+                String type1 = type.substring(0, type.indexOf(':'));
+                createhero.createHero(type1, textField.getText());
             }
         }
     }

@@ -11,7 +11,7 @@ public class Create
     public void createHero(String type, String name){
         HeroFactory heroFactory = new HeroFactory(); 
 
-        ATT hero = heroFactory.newHero(type.substring(0, type.indexOf(':')), name);
+        ATT hero = heroFactory.newHero(type, name);
         hero.someFunc();
     }
 }
