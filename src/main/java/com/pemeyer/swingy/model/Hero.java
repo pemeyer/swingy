@@ -18,4 +18,42 @@ public class Hero {
         this.def = def;
         this.hit = hit;
     }
+
+    public String getName(){
+        return this.name;
+    }
+
+    public String getclass(){
+        return this.Class;
+    }
+    public int getLevel(){
+        return this.level;
+    }
+
+    public int getExperience(){
+        return this.exp;
+    }
+    
+    public int getAttack(){
+        return this.attack;
+    }
+
+    public int getDefense(){
+        return this.def;
+    }
+
+    public int getHit(){
+        return this.hit;
+    }
+
+    public String showStats()
+    {
+        return "Name - " + this.getName() + "\n" +
+        "Class - " + this.getclass() + "\n" +
+        "Level - " + this.getLevel() + "\n" + 
+        "Experience - " + this.getExperience() + "\n" +
+        "Attack - " + this.getAttack() + "\n" +
+        "Defense - " + this.getDefense() + "\n" +
+        "Hit Points - " + this.getHit();
+    }
 }

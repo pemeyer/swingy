@@ -9,7 +9,7 @@ public class Console
 {
     Scanner input = new Scanner(System.in);
     String command;
-    Create createhero = new Create();
+    Create controller = new Create();
 
     public Console() 
     {
@@ -41,6 +41,9 @@ public class Console
         System.out.println("Elf: Attack:49 - Defense:34 - HP:100");
         type = input.next();
 
-        createhero.createHero(type, name);
+        controller.createHero(type, name);
+        System.out.println(controller.showHeroStats());
     }
+
+    
 }

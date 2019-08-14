@@ -19,6 +19,7 @@ import javax.swing.JTextField;
 import com.pemeyer.swingy.controller.Create;
 import com.pemeyer.swingy.model.ATT;
 import com.pemeyer.swingy.model.HeroFactory;
+import com.pemeyer.swingy.view.GameViewGUI;
 
 public class GUI 
 {
@@ -35,6 +36,7 @@ public class GUI
     DefaultListModel DLM;
     JList list;
     Create createhero = new Create();
+    GameViewGUI nextView = GameViewGUI();
 
     String type;
     TitleScreenHandler tsHandler = new TitleScreenHandler();
@@ -74,7 +76,8 @@ public class GUI
 
         window.setVisible(true);
     }
-    public void createCreateScreen() {
+
+    public void heroSelection() {
         titleNamePanel.setVisible(false);
         createButtonPanel.setVisible(false);
 
@@ -137,13 +140,14 @@ public class GUI
 
         con.add(mainTextPanel);
         con.add(choiceButtonPanel);
+        nextView.GameView();
     }
     
     public class TitleScreenHandler implements ActionListener {
         public void actionPerformed(ActionEvent event){
             String command = event.getActionCommand();
             if (command.equals( "CREATE GAME" )){
-                createCreateScreen();
+                heroSelection();
             } else if (command.equals("CREATE NEW HERO")){
                 type = list.getSelectedValue().toString();
                 String type1 = type.substring(0, type.indexOf(':'));

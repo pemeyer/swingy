@@ -5,13 +5,17 @@ import com.pemeyer.swingy.model.HeroFactory;
 
 public class Create
 {
+    HeroFactory heroFactory = new HeroFactory(); 
+    ATT hero;
+
     public Create(){ 
     }
 
     public void createHero(String type, String name){
-        HeroFactory heroFactory = new HeroFactory(); 
+        hero = heroFactory.newHero(type, name);
+    }
 
-        ATT hero = heroFactory.newHero(type, name);
-        hero.someFunc();
+    public String showHeroStats(){
+        return hero.showStats();
     }
 }
