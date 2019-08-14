@@ -6,6 +6,7 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.lang.ModuleLayer.Controller;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
@@ -19,13 +20,12 @@ import javax.swing.JTextField;
 import com.pemeyer.swingy.controller.Create;
 import com.pemeyer.swingy.model.ATT;
 import com.pemeyer.swingy.model.HeroFactory;
-import com.pemeyer.swingy.view.GameViewGUI;
 
 public class GUI 
 {
     JFrame window;
     Container con;
-    JPanel titleNamePanel, createButtonPanel, mainTextPanel, choiceButtonPanel;
+    JPanel titleNamePanel, createButtonPanel, mainTextPanel, choiceButtonPanel, ShowAttPanel;
     JLabel titleNameLabel;
     JTextArea mainTextArea;
     JTextField textField;
@@ -35,8 +35,7 @@ public class GUI
     JButton createButton, createHero, chooseSavedHero;
     DefaultListModel DLM;
     JList list;
-    Create createhero = new Create();
-    GameViewGUI nextView = GameViewGUI();
+    Create controller = new Create();
 
     String type;
     TitleScreenHandler tsHandler = new TitleScreenHandler();
@@ -140,7 +139,27 @@ public class GUI
 
         con.add(mainTextPanel);
         con.add(choiceButtonPanel);
-        nextView.GameView();
+    }
+
+    public void GamePlayView(){
+        mainTextPanel.setVisible(false);
+        choiceButtonPanel.setVisible(false);
+
+        ShowAttPanel = new JPanel();
+        ShowAttPanel.setBounds(100, 100, 600, 250);
+        ShowAttPanel.setBackground(Color.black);
+
+        list = new JList();
+        list.setBounds(187,200, 179,120);
+        list.setBackground(Color.white);
+        list.setForeground(Color.black);
+        list.setFont(textFieldFont);
+
+        DLM = new DefaultListModel();
+        DLM.addElement(controller.showHeroStats());
+        list.setModel(DLM);
+        ShowAttPanel.add(list);
+        con.add(ShowAttPanel);
     }
     
     public class TitleScreenHandler implements ActionListener {
@@ -151,7 +170,8 @@ public class GUI
             } else if (command.equals("CREATE NEW HERO")){
                 type = list.getSelectedValue().toString();
                 String type1 = type.substring(0, type.indexOf(':'));
-                createhero.createHero(type1, textField.getText());
+                controller.createHero(type1, textField.getText());
+                GamePlayView();
             }
         }
     }
