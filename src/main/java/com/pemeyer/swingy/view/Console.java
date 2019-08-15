@@ -1,9 +1,9 @@
 package com.pemeyer.swingy.view;
 
 import java.util.Scanner;
-import com.pemeyer.swingy.model.HeroFactory;
+import com.pemeyer.swingy.model.hero.HeroFactory;
 import com.pemeyer.swingy.controller.Create;
-import com.pemeyer.swingy.model.ATT;
+import com.pemeyer.swingy.model.hero.ATT;
 
 public class Console 
 {
@@ -43,7 +43,13 @@ public class Console
 
         controller.createHero(type, name);
         System.out.println(controller.showHeroStats());
+        play();
     }
 
+    public void play(){
+        controller.StartGame();
+        System.out.println("North - South - East - West");
+        controller.play();
+    }
     
 }

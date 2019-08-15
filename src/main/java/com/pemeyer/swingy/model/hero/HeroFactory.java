@@ -1,12 +1,12 @@
-package com.pemeyer.swingy.model;
+package com.pemeyer.swingy.model.hero;
 
-import com.pemeyer.swingy.model.ATT;
-import com.pemeyer.swingy.model.Elf;
+import com.pemeyer.swingy.model.hero.ATT;
+import com.pemeyer.swingy.model.hero.Elf;
 
 public class HeroFactory {
     public static ATT newHero(String type, String name){
         if (type.equalsIgnoreCase("ELF")){
-            return new Elf(name, "Elf", 1, 0, 49, 34, 100);
+            return new Elf(name, "Elf", 7, 0, 49, 34, 100);
         }
         else if (type.equalsIgnoreCase("Knight")){
             return new Knight(name, "Knight", 1, 0, 53, 53, 100);

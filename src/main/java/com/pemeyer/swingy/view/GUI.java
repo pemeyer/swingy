@@ -18,8 +18,8 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import com.pemeyer.swingy.controller.Create;
-import com.pemeyer.swingy.model.ATT;
-import com.pemeyer.swingy.model.HeroFactory;
+import com.pemeyer.swingy.model.hero.ATT;
+import com.pemeyer.swingy.model.hero.HeroFactory;
 
 public class GUI 
 {

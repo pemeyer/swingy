@@ -17,8 +17,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-import com.pemeyer.swingy.model.ATT;
-import com.pemeyer.swingy.model.HeroFactory;
+import com.pemeyer.swingy.model.hero.ATT;
+import com.pemeyer.swingy.model.hero.HeroFactory;
 import com.pemeyer.swingy.view.GUI;
 import com.pemeyer.swingy.view.Console;
 

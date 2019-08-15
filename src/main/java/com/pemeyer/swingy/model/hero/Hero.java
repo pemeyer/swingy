@@ -1,4 +1,4 @@
-package com.pemeyer.swingy.model;
+package com.pemeyer.swingy.model.hero;
 
 public class Hero {
     protected String name;
@@ -26,24 +26,45 @@ public class Hero {
     public String getclass(){
         return this.Class;
     }
+
     public int getLevel(){
         return this.level;
     }
 
+    public void setLevel(int level){
+        this.level = level;
+    }
+
     public int getExperience(){
         return this.exp;
+    }
+
+    public void setExperience(int exp){
+        this.exp = exp;
     }
     
     public int getAttack(){
         return this.attack;
     }
 
+    public void setAttack(int attack){
+        this.attack = attack;
+    }
+
     public int getDefense(){
         return this.def;
     }
 
+    public void setDefense(int defense){
+        this.def = defense;
+    }
+
     public int getHit(){
         return this.hit;
+    }
+
+    public void setHit(int hit){
+        this.hit = hit;
     }
 
     public String showStats()
