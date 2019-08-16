@@ -31,7 +31,7 @@ public class Create
     }
 
     public void play(){
-        game.movePosition(map);
+        game.start(map);
     }
 
 
