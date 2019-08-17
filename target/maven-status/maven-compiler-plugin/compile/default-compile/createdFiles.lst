@@ -1,9 +1,9 @@
-com/pemeyer/swingy/controller/Gameplay.class
 com/pemeyer/swingy/controller/Create.class
-com/pemeyer/swingy/view/Console.class
 com/pemeyer/swingy/view/GUI$TitleScreenHandler.class
+com/pemeyer/swingy/view/Console.class
 com/pemeyer/swingy/model/hero/Knight.class
 com/pemeyer/swingy/model/hero/Elf.class
+com/pemeyer/swingy/model/enemy/Enemy.class
 com/pemeyer/swingy/view/GUI.class
 com/pemeyer/swingy/model/hero/ATT.class
 com/pemeyer/swingy/model/hero/Ogre.class

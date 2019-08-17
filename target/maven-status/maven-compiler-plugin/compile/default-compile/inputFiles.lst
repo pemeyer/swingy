@@ -5,8 +5,8 @@
 /sgoinfre/pemeyer/java/swingy/src/main/java/com/pemeyer/swingy/model/hero/Hero.java
 /sgoinfre/pemeyer/java/swingy/src/main/java/com/pemeyer/swingy/model/hero/Ogre.java
 /sgoinfre/pemeyer/java/swingy/src/main/java/com/pemeyer/swingy/view/GUI.java
+/sgoinfre/pemeyer/java/swingy/src/main/java/com/pemeyer/swingy/model/enemy/Enemy.java
 /sgoinfre/pemeyer/java/swingy/src/main/java/com/pemeyer/swingy/view/Console.java
-/sgoinfre/pemeyer/java/swingy/src/main/java/com/pemeyer/swingy/controller/Gameplay.java
 /sgoinfre/pemeyer/java/swingy/src/main/java/com/pemeyer/swingy/model/hero/ATT.java
 /sgoinfre/pemeyer/java/swingy/src/main/java/com/pemeyer/swingy/App.java
 /sgoinfre/pemeyer/java/swingy/src/main/java/com/pemeyer/swingy/model/hero/Elf.java

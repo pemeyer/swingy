@@ -35,7 +35,7 @@ public class Game {
         }
     }
 
-    public void start(int mapsize){
+    public void start(int mapsize, ATT hero){
         String direction;
         String option;
         int i;
@@ -71,7 +71,7 @@ public class Game {
                     option = input.next();
 
                     if (option.equalsIgnoreCase("fight")){
-                        fight();
+                        fight(hero, enemies[i]);
                     }else if (option.equalsIgnoreCase("run")){
                         run(direction);
                     }
@@ -89,14 +89,41 @@ public class Game {
         enemy = new Enemy((mapsize / 2), (mapsize / 2) * -1);
         return enemy;
     }
-    public void fight() {
+    public void fight(ATT hero, Enemy enemy) {
+        int heroHP = hero.getHit();
+        int enemyHP = enemy.getHit();
 
+        while (enemyHP > 0 && heroHP > 0)
+        {
+            int heroTotal = (int) (Math.random() * ((hero.getAttack() - hero.getDefense()) + 1)) + hero.getDefense();
+            int villainTotal = (int)(Math.random() * ((hero.getAttack() - hero.getDefense()) + 1)) + hero.getDefense();
+            if (heroTotal > villainTotal){
+                enemyHP -= hero.getAttack();
+                System.out.println("You damaged your enemy - ENEMY hitpoints: " + enemyHP);
+            }else if (heroTotal < villainTotal){
+                heroHP -= enemy.getAttack();
+                System.out.println("You've taken damage'- Hitpoints: " + heroHP);
+            }
+        }
+        if (enemyHP < 1){
+            System.out.println("You've won");
+            //set experience and level function();
+            //and save();
+            //turn switch statements into function
+            System.exit(0);
+        }
+        else if (heroHP < 1){
+            System.out.println("You just got killed sorry");
+            System.out.println("Game over");
+            System.exit(0);
+        }
+        
     }
 
     public void run(String direction) {
         Random r = new Random();
         int coinToss = r.nextInt(2);
-        if (coinToss == 0){
+        if (coinToss == 1){
             switch (direction.toUpperCase()){
                 case "NORTH":
                 y--;
@@ -111,8 +138,10 @@ public class Game {
                 x++;
                 break;
             }
+            //turn into view
             System.out.println("You got away");
         }else {
+            //turn into view GameOVER
             System.out.println("You just got killed sorry");
             System.out.println("Game over");
             System.exit(0);
