@@ -8,5 +8,10 @@ public interface ATT {
     int getAttack();
     int getDefense();
     int getHit();
+    void setLevel(int level);
+    void setExperience(int exp);
+    void setAttack(int attack);
+    void setDefense(int defense);
+    void setHit(int hit);
     String showStats();
 }

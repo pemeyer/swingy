@@ -1,8 +1,11 @@
 package com.pemeyer.swingy.model;
 
 import java.lang.Math;
+import java.util.*; 
 import java.util.Random;
 import java.util.Scanner;
+
+import java.io.*;
 
 import com.pemeyer.swingy.model.enemy.Enemy;
 import com.pemeyer.swingy.model.hero.ATT;
@@ -45,6 +48,8 @@ public class Game {
         }
     
         while (edgeReached(x, y, mapsize)) {
+            System.out.println("Which direction?");
+            System.out.println("North - South - East - West");
             direction = input.next();
             switch (direction.toUpperCase()){
                 case "NORTH":
@@ -82,6 +87,7 @@ public class Game {
         } 
         if (!edgeReached(x, y, mapsize)){
             System.out.println("You have won the game");
+            save(hero);
         }
     }
 
@@ -89,6 +95,7 @@ public class Game {
         enemy = new Enemy((mapsize / 2), (mapsize / 2) * -1);
         return enemy;
     }
+
     public void fight(ATT hero, Enemy enemy) {
         int heroHP = hero.getHit();
         int enemyHP = enemy.getHit();
@@ -107,17 +114,39 @@ public class Game {
         }
         if (enemyHP < 1){
             System.out.println("You've won");
-            //set experience and level function();
-            //and save();
-            //turn switch statements into function
+            setXPandLevel(hero);
+            save(hero);
             System.exit(0);
         }
         else if (heroHP < 1){
             System.out.println("You just got killed sorry");
             System.out.println("Game over");
+            save(hero);
             System.exit(0);
         }
         
+    }
+
+    public void setXPandLevel(ATT hero){
+        hero.setExperience((int)Math.floor(hero.getLevel()*1000+(Math.pow(hero.getLevel() - 1, 2))*450));
+        hero.setLevel(hero.getLevel() + 1);
+    }
+
+    public void save(ATT hero){
+        String heroAtts = hero.getName() + " " 
+        + hero.getClass() +  " " 
+        + hero.getLevel() +  " "
+        + hero.getExperience() +  " "
+        + hero.getAttack() +  " "
+        + hero.getDefense() +  " "
+        + hero.getHit();
+        try{
+            File file = new File("../persistence/savedHeros.txt");
+        }
+        
+        FileWriter fr = new FileWriter(file, true);
+        fr.write(heroAtts);
+        fr.close();
     }
 
     public void run(String direction) {

@@ -48,7 +48,6 @@ public class Console
 
     public void play(){
         controller.StartGame();
-        System.out.println("North - South - East - West");
         controller.play();
     }
     
