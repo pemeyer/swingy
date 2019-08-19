@@ -24,7 +24,7 @@ public class GUI
 {
     JFrame window;
     Container con;
-    JPanel titleNamePanel, createButtonPanel, mainTextPanel, choiceButtonPanel, ShowAttPanel;
+    JPanel titleNamePanel, createButtonPanel, mainTextPanel, choiceButtonPanel, ShowAttPanel, textFieldPanel;
     JLabel titleNameLabel;
     JTextArea mainTextArea;
     JTextField textField;
@@ -42,7 +42,7 @@ public class GUI
    
     public GUI(){
         window = new JFrame();
-        window.setSize(800, 600);
+        window.setSize(1000, 600);
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.getContentPane().setBackground(Color.black);
         window.setLayout(null);
@@ -145,8 +145,9 @@ public class GUI
         choiceButtonPanel.setVisible(false);
 
         ShowAttPanel = new JPanel();
-        ShowAttPanel.setBounds(100, 100, 600, 250);
-        ShowAttPanel.setBackground(Color.black);
+        ShowAttPanel.setBounds(50, 100, 900, 400);
+        ShowAttPanel.setBackground(Color.blue);
+
 
         list = new JList();
         list.setBounds(187,200, 179,120);
@@ -159,6 +160,31 @@ public class GUI
         list.setModel(DLM);
         ShowAttPanel.add(list);
         con.add(ShowAttPanel);
+
+        mainTextArea = new JTextArea("Choose a direction");
+        mainTextArea.setBounds(100, 60, 600, 250);
+        mainTextArea.setBackground(Color.black);
+        mainTextArea.setForeground(Color.white);
+        mainTextArea.setFont(normalFont);
+        mainTextArea.setLineWrap(true);
+        ShowAttPanel.add(mainTextArea);
+
+        textField = new JTextField(20);
+        textField.setBounds(100, 100, 100, 100);
+        textField.setBackground(Color.white);
+        textField.setForeground(Color.black);
+        textField.setFont(normalFont);
+        ShowAttPanel.add(textField);
+
+        createHero = new JButton("MOVE");
+        createHero.setBackground(Color.black);
+        createHero.setForeground(Color.white);
+        createHero.setFont(normalFont);
+        createHero.addActionListener(tsHandler);
+        createHero.setFocusPainted(false);
+        ShowAttPanel.add(createHero);
+
+        createHero.setActionCommand("MOVE");
     }
     
     public class TitleScreenHandler implements ActionListener {
@@ -169,8 +195,10 @@ public class GUI
             } else if (command.equals("CREATE NEW HERO")){
                 type = list.getSelectedValue().toString();
                 String type1 = type.substring(0, type.indexOf(':'));
-                controller.createHero(type1, textField.getText());
+                controller.createHero(type1, textField.getText(), 0, 0, 0, 0, 0);
                 GamePlayView();
+            }else if (command.equals("MOVE")){
+                controller.StartGame();
             }
         }
     }

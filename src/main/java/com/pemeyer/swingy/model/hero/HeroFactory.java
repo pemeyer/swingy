@@ -4,7 +4,7 @@ import com.pemeyer.swingy.model.hero.ATT;
 import com.pemeyer.swingy.model.hero.Elf;
 
 public class HeroFactory {
-    public static ATT newHero(String type, String name){
+    public static ATT newHero(String type, String name, int exp, int level, int att, int def, int hp){
         if (type.equalsIgnoreCase("ELF")){
             return new Elf(name, "Elf", 1, 0, 49, 34, 100);
         }
@@ -13,6 +13,9 @@ public class HeroFactory {
         }
         else if (type.equalsIgnoreCase("Ogre")){
             return new Ogre(name, "Ogre", 1, 0, 45, 39, 100);
+        }
+        else if (type.equalsIgnoreCase(type)){
+            return new Select(name, type, exp, level, att, def, hp);
         }
         return null;
     }

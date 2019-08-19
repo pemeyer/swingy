@@ -16,8 +16,8 @@ public class Create
     public Create(){ 
     }
 
-    public ATT createHero(String type, String name){
-        return hero = heroFactory.newHero(type, name);
+    public ATT createHero(String type, String name, int level, int exp, int att, int def, int hp ){
+        return hero = heroFactory.newHero(type, name, level, exp, att, def, hp);
     }
 
     public String showHeroStats(){
@@ -27,14 +27,6 @@ public class Create
     public void StartGame(){
         //sets coordinates to zero. Creates map based on level
         map = (int) Math.floor(game.GenerateMap(hero));
-        System.out.println(map);
-    }
-
-    public void play(){
         game.start(map, hero);
     }
-
-
-
-
 }

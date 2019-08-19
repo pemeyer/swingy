@@ -37,7 +37,34 @@ public class Game {
             return false;
         }
     }
+    public Enemy createEnemies(int mapsize){
+        enemy = new Enemy((mapsize / 2), (mapsize / 2) * -1);
+        return enemy;
+    }
+    public void setXPandLevel(ATT hero){
+        hero.setExperience((int)Math.floor(hero.getLevel()*1000+(Math.pow(hero.getLevel() - 1, 2))*450));
+        hero.setLevel(hero.getLevel() + 1);
+    }
 
+    public void save(ATT hero){
+        try  {
+            String text = hero.getName() + " " 
+            + hero.getclass() +  " " 
+            + hero.getLevel() +  " "
+            + hero.getExperience() +  " "
+            + hero.getAttack() +  " "
+            + hero.getDefense() +  " "
+            + hero.getHit();
+            File newTextFile = new File("src/main/java/com/pemeyer/swingy/persistence/savedHeros.txt");
+            FileWriter fr = new FileWriter(newTextFile);
+            fr.write(text);
+            fr.close();
+        }catch (Exception e){
+            System.out.print(e.getMessage());
+        }        
+    }
+
+    //refactor bottom functions to work with GUI and console
     public void start(int mapsize, ATT hero){
         String direction;
         String option;
@@ -47,6 +74,7 @@ public class Game {
             enemies[i] = createEnemies(mapsize);
         }
     
+        //turn into function
         while (edgeReached(x, y, mapsize)) {
             System.out.println("Which direction?");
             System.out.println("North - South - East - West");
@@ -67,6 +95,7 @@ public class Game {
             }
             // System.out.println(y + " " + x);
             // System.out.println(enemyCoords[0] + " " + enemyCoords[1]);
+            //turn into function
             for (i = 0; i < enemies.length; i++){
                 if (y == enemies[i].enemyCoords()[0] && x == enemies[i].enemyCoords()[1]){
                     //turn into view
@@ -78,7 +107,7 @@ public class Game {
                     if (option.equalsIgnoreCase("fight")){
                         fight(hero, enemies[i]);
                     }else if (option.equalsIgnoreCase("run")){
-                        run(direction);
+                        run(direction, hero);
                     }
 
                 }
@@ -87,14 +116,12 @@ public class Game {
         } 
         if (!edgeReached(x, y, mapsize)){
             System.out.println("You have won the game");
+            setXPandLevel(hero);
             save(hero);
         }
     }
 
-    public Enemy createEnemies(int mapsize){
-        enemy = new Enemy((mapsize / 2), (mapsize / 2) * -1);
-        return enemy;
-    }
+    
 
     public void fight(ATT hero, Enemy enemy) {
         int heroHP = hero.getHit();
@@ -127,29 +154,7 @@ public class Game {
         
     }
 
-    public void setXPandLevel(ATT hero){
-        hero.setExperience((int)Math.floor(hero.getLevel()*1000+(Math.pow(hero.getLevel() - 1, 2))*450));
-        hero.setLevel(hero.getLevel() + 1);
-    }
-
-    public void save(ATT hero){
-        String heroAtts = hero.getName() + " " 
-        + hero.getClass() +  " " 
-        + hero.getLevel() +  " "
-        + hero.getExperience() +  " "
-        + hero.getAttack() +  " "
-        + hero.getDefense() +  " "
-        + hero.getHit();
-        try{
-            File file = new File("../persistence/savedHeros.txt");
-        }
-        
-        FileWriter fr = new FileWriter(file, true);
-        fr.write(heroAtts);
-        fr.close();
-    }
-
-    public void run(String direction) {
+    public void run(String direction, ATT hero) {
         Random r = new Random();
         int coinToss = r.nextInt(2);
         if (coinToss == 1){
@@ -173,6 +178,7 @@ public class Game {
             //turn into view GameOVER
             System.out.println("You just got killed sorry");
             System.out.println("Game over");
+            save(hero);
             System.exit(0);
         }
     }
