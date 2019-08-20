@@ -1,1 +1,1 @@
-chase Knight 2 1000 53 53 100
+Elf chase 2 1000 49 34 100

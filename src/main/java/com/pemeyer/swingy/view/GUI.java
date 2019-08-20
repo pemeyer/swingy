@@ -19,8 +19,9 @@ import javax.swing.JTextField;
 import com.pemeyer.swingy.controller.Create;
 import com.pemeyer.swingy.model.hero.ATT;
 import com.pemeyer.swingy.model.hero.HeroFactory;
+import com.pemeyer.swingy.view.View;
 
-public class GUI 
+public class GUI implements View
 {
     JFrame window;
     Container con;
@@ -31,16 +32,18 @@ public class GUI
     Font titleFont = new Font("Times New Roman", Font.PLAIN, 90);
     Font normalFont = new Font("Times New Roman", Font.PLAIN, 28);
     Font textFieldFont = new Font("Times New Roman", Font.PLAIN, 14);
-    JButton createButton, createHero, chooseSavedHero;
+    JButton createButton, createHero, chooseSavedHero, north, south, east, west;
     DefaultListModel DLM;
     JList list;
     Create controller = new Create();
+    View view;
 
     String type;
     TitleScreenHandler tsHandler = new TitleScreenHandler();
 
    
-    public GUI(){
+    public GUI(View view){
+        view = view;
         window = new JFrame();
         window.setSize(1000, 600);
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -75,7 +78,7 @@ public class GUI
         window.setVisible(true);
     }
 
-    public void heroSelection() {
+    public void heroCreation() {
         titleNamePanel.setVisible(false);
         createButtonPanel.setVisible(false);
 
@@ -135,6 +138,7 @@ public class GUI
 
         createButton.setActionCommand( "CREATE GAME" );
         createHero.setActionCommand( "CREATE NEW HERO" );
+        chooseSavedHero.setActionCommand("CHOOSE");
 
         con.add(mainTextPanel);
         con.add(choiceButtonPanel);
@@ -169,36 +173,142 @@ public class GUI
         mainTextArea.setLineWrap(true);
         ShowAttPanel.add(mainTextArea);
 
-        textField = new JTextField(20);
-        textField.setBounds(100, 100, 100, 100);
-        textField.setBackground(Color.white);
-        textField.setForeground(Color.black);
-        textField.setFont(normalFont);
-        ShowAttPanel.add(textField);
 
-        createHero = new JButton("MOVE");
-        createHero.setBackground(Color.black);
-        createHero.setForeground(Color.white);
-        createHero.setFont(normalFont);
-        createHero.addActionListener(tsHandler);
-        createHero.setFocusPainted(false);
-        ShowAttPanel.add(createHero);
+        north = new JButton("NORTH");
+        north.setBackground(Color.black);
+        north.setForeground(Color.white);
+        north.setFont(normalFont);
+        north.addActionListener(tsHandler);
+        north.setFocusPainted(false);
+        ShowAttPanel.add(north);
 
-        createHero.setActionCommand("MOVE");
+        south = new JButton("SOUTH");
+        south.setBackground(Color.black);
+        south.setForeground(Color.white);
+        south.setFont(normalFont);
+        south.addActionListener(tsHandler);
+        south.setFocusPainted(false);
+        ShowAttPanel.add(south);
+        
+        east = new JButton("EAST");
+        east.setBackground(Color.black);
+        east.setForeground(Color.white);
+        east.setFont(normalFont);
+        east.addActionListener(tsHandler);
+        east.setFocusPainted(false);
+        ShowAttPanel.add(east);
+
+        west = new JButton("WEST");
+        west.setBackground(Color.black);
+        west.setForeground(Color.white);
+        west.setFont(normalFont);
+        west.addActionListener(tsHandler);
+        west.setFocusPainted(false);
+        ShowAttPanel.add(west);
+
+        north.setActionCommand("NORTH");
+        south.setActionCommand("SOUTH");
+        east.setActionCommand("EAST");
+        east.setActionCommand("WEST");
+        
+    }
+
+    @Deprecated
+    public String createOrSelect() {
+        // System.out.println("CREATE - Create hero");
+        // System.out.println("SELECT - Choose saved hero");
+
+        // System.out.println();
+        // command = input.next();
+
+        return "command";
+    }
+
+    @Deprecated
+    public Boolean didCreate(String command){
+        // if (command.equalsIgnoreCase("Create")){
+        //     return true;
+        // }
+        // else {
+        //     System.out.println("Wrong command!");
+            return false;
+        // }
+    }
+
+    @Deprecated
+    public Boolean isClass(String input) {
+        // if (input.equalsIgnoreCase("Knight")){
+        //     return true;
+        // }
+        // else if (input.equalsIgnoreCase("Ogre")){
+        //     return true;
+        // }
+        // else if (input.equalsIgnoreCase("Elf")){
+        //     return true;
+        // }
+        // else {
+            return false;
+        // }
+    }
+
+    public String direction(){
+        mainTextArea.append("Which direction?\nNorth - South - East - West");
+        return "North"; //= input.next();
+    }
+
+    public void gotAway(){
+        mainTextArea.append("You got away");
+    }
+
+    public void gameOver(){
+        mainTextArea.append("You just got killed sorry\n Game Over");
+    }
+
+    public void won(){
+        mainTextArea.append("You have won the game");
+    }
+
+    public void errorMessage(Exception e){
+        mainTextArea.append(e.getMessage());
+    }
+
+    public void damage(int num){
+        if (num == 1){
+            mainTextArea.append("You damaged your enemy");
+        }
+        else {
+            mainTextArea.append("You've taken damage");
+        }
     }
     
+    public String fightOrRun(){
+        String option;
+        mainTextArea.append("You've encountered an enemy\nYou have two options, FIGHT OR RUN!!\nPick one:");
+        return "option"; //input.next();
+    }
+
+    public void playGame(View view){
+        controller.StartGame(view);
+    }
+
+    public void select(){
+    }
+
     public class TitleScreenHandler implements ActionListener {
         public void actionPerformed(ActionEvent event){
             String command = event.getActionCommand();
             if (command.equals( "CREATE GAME" )){
-                heroSelection();
+                heroCreation();
             } else if (command.equals("CREATE NEW HERO")){
                 type = list.getSelectedValue().toString();
                 String type1 = type.substring(0, type.indexOf(':'));
                 controller.createHero(type1, textField.getText(), 0, 0, 0, 0, 0);
                 GamePlayView();
-            }else if (command.equals("MOVE")){
-                controller.StartGame();
+                //playGame(view);
+            }else if (command.equals("CHOOSE")){
+                controller.select();
+                GamePlayView();
+                //playGame(view);
             }
         }
     }

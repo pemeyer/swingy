@@ -9,6 +9,7 @@ import java.io.*;
 
 import com.pemeyer.swingy.model.enemy.Enemy;
 import com.pemeyer.swingy.model.hero.ATT;
+import com.pemeyer.swingy.view.View;
 
 public class Game {
     Scanner input = new Scanner(System.in);
@@ -46,7 +47,7 @@ public class Game {
         hero.setLevel(hero.getLevel() + 1);
     }
 
-    public void save(ATT hero){
+    public void save(ATT hero, View view){
         try  {
             String text = hero.getName() + " " 
             + hero.getclass() +  " " 
@@ -60,12 +61,10 @@ public class Game {
             fr.write(text);
             fr.close();
         }catch (Exception e){
-            System.out.print(e.getMessage());
+            view.errorMessage(e);
         }        
     }
-
-    //refactor bottom functions to work with GUI and console
-    public void start(int mapsize, ATT hero){
+    public void start(int mapsize, ATT hero, View view){
         String direction;
         String option;
         int i;
@@ -76,9 +75,7 @@ public class Game {
     
         //turn into function
         while (edgeReached(x, y, mapsize)) {
-            System.out.println("Which direction?");
-            System.out.println("North - South - East - West");
-            direction = input.next();
+            direction = view.direction();
             switch (direction.toUpperCase()){
                 case "NORTH":
                 y++;
@@ -93,37 +90,25 @@ public class Game {
                 x--;
                 break;
             }
-            // System.out.println(y + " " + x);
-            // System.out.println(enemyCoords[0] + " " + enemyCoords[1]);
-            //turn into function
             for (i = 0; i < enemies.length; i++){
                 if (y == enemies[i].enemyCoords()[0] && x == enemies[i].enemyCoords()[1]){
-                    //turn into view
-                    System.out.println("You've encountered an enemy");
-                    System.out.println("You have two options, FIGHT OR RUN!!");
-                    System.out.println("Pick one:");
-                    option = input.next();
-
+                    option = view.fightOrRun();
                     if (option.equalsIgnoreCase("fight")){
-                        fight(hero, enemies[i]);
+                        fight(hero, enemies[i], view);
                     }else if (option.equalsIgnoreCase("run")){
-                        run(direction, hero);
+                        run(direction, hero, view);
                     }
-
                 }
             }
-           
         } 
         if (!edgeReached(x, y, mapsize)){
-            System.out.println("You have won the game");
+            view.won();
             setXPandLevel(hero);
-            save(hero);
+            save(hero, view);
         }
     }
 
-    
-
-    public void fight(ATT hero, Enemy enemy) {
+    public void fight(ATT hero, Enemy enemy, View view) {
         int heroHP = hero.getHit();
         int enemyHP = enemy.getHit();
 
@@ -133,28 +118,27 @@ public class Game {
             int villainTotal = (int)(Math.random() * ((hero.getAttack() - hero.getDefense()) + 1)) + hero.getDefense();
             if (heroTotal > villainTotal){
                 enemyHP -= hero.getAttack();
-                System.out.println("You damaged your enemy - ENEMY hitpoints: " + enemyHP);
+                view.damage(1);
             }else if (heroTotal < villainTotal){
                 heroHP -= enemy.getAttack();
-                System.out.println("You've taken damage'- Hitpoints: " + heroHP);
+                view.damage(0);
             }
         }
         if (enemyHP < 1){
-            System.out.println("You've won");
+            view.won();
             setXPandLevel(hero);
-            save(hero);
+            save(hero, view);
             System.exit(0);
         }
         else if (heroHP < 1){
-            System.out.println("You just got killed sorry");
-            System.out.println("Game over");
-            save(hero);
+            view.gameOver();
+            save(hero, view);
             System.exit(0);
         }
         
     }
 
-    public void run(String direction, ATT hero) {
+    public void run(String direction, ATT hero, View view) {
         Random r = new Random();
         int coinToss = r.nextInt(2);
         if (coinToss == 1){
@@ -172,14 +156,12 @@ public class Game {
                 x++;
                 break;
             }
-            //turn into view
-            System.out.println("You got away");
+            view.gotAway();
         }else {
-            //turn into view GameOVER
-            System.out.println("You just got killed sorry");
-            System.out.println("Game over");
-            save(hero);
+            view.gameOver();
+            save(hero, view);
             System.exit(0);
         }
     }
+
 }
