@@ -6,6 +6,9 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
@@ -15,20 +18,22 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.plaf.basic.BasicMenuUI.ChangeHandler;
 
 import com.pemeyer.swingy.controller.Create;
 import com.pemeyer.swingy.model.hero.ATT;
+import com.pemeyer.swingy.model.hero.Hero;
 import com.pemeyer.swingy.model.hero.HeroFactory;
 import com.pemeyer.swingy.view.View;
 
-public class GUI implements View
+public class GUI implements View, ActionListener
 {
     JFrame window;
     Container con;
     JPanel titleNamePanel, createButtonPanel, mainTextPanel, choiceButtonPanel, ShowAttPanel, textFieldPanel;
     JLabel titleNameLabel;
     JTextArea mainTextArea;
-    JTextField textField;
+    JTextField textField, newTextField;
     Font titleFont = new Font("Times New Roman", Font.PLAIN, 90);
     Font normalFont = new Font("Times New Roman", Font.PLAIN, 28);
     Font textFieldFont = new Font("Times New Roman", Font.PLAIN, 14);
@@ -37,13 +42,14 @@ public class GUI implements View
     JList list;
     Create controller = new Create();
     View view;
+    ATT hero;
 
-    String type;
+    String type, direction;
     TitleScreenHandler tsHandler = new TitleScreenHandler();
+    // ChangeHandler choiceHandler = new ChangeHandler();
 
    
     public GUI(View view){
-        view = view;
         window = new JFrame();
         window.setSize(1000, 600);
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -78,7 +84,11 @@ public class GUI implements View
         window.setVisible(true);
     }
 
-    public void heroCreation() {
+    public void grabView(View views){
+        view = views;
+    }
+
+    public ATT heroCreation() {
         titleNamePanel.setVisible(false);
         createButtonPanel.setVisible(false);
 
@@ -142,6 +152,7 @@ public class GUI implements View
 
         con.add(mainTextPanel);
         con.add(choiceButtonPanel);
+        return null;
     }
 
     public void GamePlayView(){
@@ -150,7 +161,7 @@ public class GUI implements View
 
         ShowAttPanel = new JPanel();
         ShowAttPanel.setBounds(50, 100, 900, 400);
-        ShowAttPanel.setBackground(Color.blue);
+        ShowAttPanel.setBackground(Color.black);
 
 
         list = new JList();
@@ -174,43 +185,12 @@ public class GUI implements View
         ShowAttPanel.add(mainTextArea);
 
 
-        north = new JButton("NORTH");
-        north.setBackground(Color.black);
-        north.setForeground(Color.white);
-        north.setFont(normalFont);
-        north.addActionListener(tsHandler);
-        north.setFocusPainted(false);
-        ShowAttPanel.add(north);
-
-        south = new JButton("SOUTH");
-        south.setBackground(Color.black);
-        south.setForeground(Color.white);
-        south.setFont(normalFont);
-        south.addActionListener(tsHandler);
-        south.setFocusPainted(false);
-        ShowAttPanel.add(south);
-        
-        east = new JButton("EAST");
-        east.setBackground(Color.black);
-        east.setForeground(Color.white);
-        east.setFont(normalFont);
-        east.addActionListener(tsHandler);
-        east.setFocusPainted(false);
-        ShowAttPanel.add(east);
-
-        west = new JButton("WEST");
-        west.setBackground(Color.black);
-        west.setForeground(Color.white);
-        west.setFont(normalFont);
-        west.addActionListener(tsHandler);
-        west.setFocusPainted(false);
-        ShowAttPanel.add(west);
-
-        north.setActionCommand("NORTH");
-        south.setActionCommand("SOUTH");
-        east.setActionCommand("EAST");
-        east.setActionCommand("WEST");
-        
+        newTextField = new JTextField(20);
+        newTextField.setBounds(100, 100, 100, 100);
+        newTextField.setBackground(Color.white);
+        newTextField.setForeground(Color.black);
+        newTextField.setFont(normalFont);
+        ShowAttPanel.add(newTextField);
     }
 
     @Deprecated
@@ -252,46 +232,49 @@ public class GUI implements View
     }
 
     public String direction(){
-        mainTextArea.append("Which direction?\nNorth - South - East - West");
-        return "North"; //= input.next();
+        mainTextArea.setText("Which direction?\nNorth - South - East - West");
+        newTextField.addActionListener(this);
+        return direction;
     }
 
     public void gotAway(){
-        mainTextArea.append("You got away");
+        mainTextArea.setText("You got away");
     }
 
     public void gameOver(){
-        mainTextArea.append("You just got killed sorry\n Game Over");
+        mainTextArea.setText("You just got killed sorry\n Game Over");
     }
 
     public void won(){
-        mainTextArea.append("You have won the game");
+        mainTextArea.setText("You have won the game");
     }
 
     public void errorMessage(Exception e){
-        mainTextArea.append(e.getMessage());
+        mainTextArea.setText(e.getMessage());
     }
 
     public void damage(int num){
         if (num == 1){
-            mainTextArea.append("You damaged your enemy");
+            mainTextArea.setText("You damaged your enemy");
         }
         else {
-            mainTextArea.append("You've taken damage");
+            mainTextArea.setText("You've taken damage");
         }
     }
     
     public String fightOrRun(){
         String option;
-        mainTextArea.append("You've encountered an enemy\nYou have two options, FIGHT OR RUN!!\nPick one:");
-        return "option"; //input.next();
+        mainTextArea.setText("You've encountered an enemy\nYou have two options, FIGHT OR RUN!!\nPick one:");
+        textField.addActionListener(this);
+        return "Fight"; //input.next();
     }
 
-    public void playGame(View view){
-        controller.StartGame(view);
+    public void playGame(View view, ATT hero){
+        controller.StartGame(view, hero);
     }
 
-    public void select(){
+    public ATT select(){
+        return null;
     }
 
     public class TitleScreenHandler implements ActionListener {
@@ -302,14 +285,20 @@ public class GUI implements View
             } else if (command.equals("CREATE NEW HERO")){
                 type = list.getSelectedValue().toString();
                 String type1 = type.substring(0, type.indexOf(':'));
-                controller.createHero(type1, textField.getText(), 0, 0, 0, 0, 0);
+                hero = controller.createHero(type1, textField.getText(), 0, 0, 0, 0, 0);
                 GamePlayView();
-                //playGame(view);
-            }else if (command.equals("CHOOSE")){
-                controller.select();
+                playGame(view, hero);
+            } else if (command.equals("CHOOSE")){
+                hero = controller.select();
                 GamePlayView();
-                //playGame(view);
+                playGame(view, hero);
             }
         }
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        newTextField.setText("North");
+        direction += "North";
     }
 }

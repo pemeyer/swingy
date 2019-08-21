@@ -31,13 +31,13 @@ public class Create
 
 
     // public 
-    public void select(){
+    public ATT select(){
         try {
             BufferedReader br = new BufferedReader(new FileReader("src/main/java/com/pemeyer/swingy/persistence/savedHeros.txt"));
             String st;
                 
             while ((st = br.readLine()) != null){
-                createHero(st.split(" ")[0], st.split(" ")[1],
+                hero = createHero(st.split(" ")[0], st.split(" ")[1],
                 Integer.parseInt(st.split(" ")[2]), Integer.parseInt(st.split(" ")[3]),
                 Integer.parseInt(st.split(" ")[4]),Integer.parseInt(st.split(" ")[5]),
                 Integer.parseInt(st.split(" ")[6]));
@@ -46,11 +46,10 @@ public class Create
         catch (Exception e){
             e.getMessage();
         }
+        return hero;
     }
 
-    public void StartGame(View console){
-        //sets coordinates to zero. Creates map based on level
-        map = (int) Math.floor(game.GenerateMap(hero));
-        game.start(map, hero, console);
+    public void StartGame(View console, ATT hero){
+        game.start(hero, console);
     }
 }

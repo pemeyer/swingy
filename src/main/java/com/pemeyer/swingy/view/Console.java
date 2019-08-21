@@ -54,7 +54,7 @@ public class Console implements View
         }
     }
 
-    public void heroCreation()
+    public ATT heroCreation()
     {
         String name;
         String type;
@@ -72,9 +72,7 @@ public class Console implements View
         }
         while (!isClass(type));
         
-        controller.createHero(type, name, 0, 0, 0, 0, 0);
-        System.out.println(controller.showHeroStats());
-        System.out.println("\n");
+        return controller.createHero(type, name, 0, 0, 0, 0, 0);
     }
 
     public String direction(){
@@ -118,10 +116,15 @@ public class Console implements View
         return option = input.next();
     }
 
-    public void playGame(View view){
-        controller.StartGame(view);
+    public void playGame(View view, ATT hero){
+        controller.StartGame(view, hero);
     }
-    public void select(){
-        controller.select();
+    public ATT select(){
+        return controller.select();
+    }
+
+    @Override
+    public void grabView(View view) {
+
     }
 }

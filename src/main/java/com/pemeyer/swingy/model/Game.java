@@ -64,10 +64,12 @@ public class Game {
             view.errorMessage(e);
         }        
     }
-    public void start(int mapsize, ATT hero, View view){
+    public void start(ATT hero, View view){
         String direction;
         String option;
         int i;
+        int mapsize;
+        mapsize = (int) Math.floor(GenerateMap(hero));
         //spread enemies accross board CreateEnemies
         for (i = 0; i < 10; i++){
             enemies[i] = createEnemies(mapsize);
@@ -76,6 +78,7 @@ public class Game {
         //turn into function
         while (edgeReached(x, y, mapsize)) {
             direction = view.direction();
+            System.out.println(direction);
             switch (direction.toUpperCase()){
                 case "NORTH":
                 y++;

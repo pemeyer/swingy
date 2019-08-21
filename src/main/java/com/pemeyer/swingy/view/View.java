@@ -1,11 +1,13 @@
 package com.pemeyer.swingy.view;
 
+import com.pemeyer.swingy.model.hero.ATT;
+
 public interface View {
     String createOrSelect();
     Boolean didCreate(String command);
     Boolean isClass(String input);
-    void heroCreation();
-    void playGame(View console);
+    ATT heroCreation();
+    void playGame(View console, ATT hero);
     String direction();
     String fightOrRun();
     void gotAway();
@@ -13,5 +15,6 @@ public interface View {
     void won();
     void errorMessage(Exception e);
     void damage(int num);
-	void select();
+    ATT select();
+    void grabView(View view);
 }

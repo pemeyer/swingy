@@ -30,12 +30,14 @@ public class App
     static GUI newGUI;
     static Console newConsole;
     static View view;
+    static ATT hero;
     //Console newConsole;
     public static void main( String[] args )
     {   
         if (args[0].equalsIgnoreCase("GUI"))
         {
             view = new GUI(view);
+            view.grabView(view);
         }
         else if (args[0].equalsIgnoreCase("Console"))
         {
@@ -45,12 +47,12 @@ public class App
                 while (!view.didCreate(command)) {
                     command = view.createOrSelect();
                 }
-                view.heroCreation();
+                hero = view.heroCreation();
             }else {
                 System.out.println("You chose Select");
-                view.select();
+                hero = view.select();
             }
-            view.playGame(view);
+            view.playGame(view, hero);
         }
     }
 
